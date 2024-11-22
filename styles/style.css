@@ -1,0 +1,68 @@
+body {
+    background-color: #EEEFE5;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+/* Contenedor principal */
+.carousel-container {
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;  /* Oculta lo que está fuera de la vista */
+  position: relative;
+  margin: 0 auto;
+}
+
+/* Deslizar las imágenes y texto */
+.carousel-slide {
+  display: flex;
+  transition: transform 1s ease-in-out;
+  width: 300%; /* Asegura que las tres imágenes se coloquen en línea */
+}
+
+/* Cada imagen y texto en el carrusel */
+.carousel-item {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 1s ease-in-out;
+}
+
+/* Imagen dentro del carrusel */
+.carousel-image {
+  width: 100%;
+  height: auto;
+  opacity: 0; /* La imagen se vuelve invisible hasta que se desliza */
+  transition: opacity 1s ease-in-out;
+}
+
+/* Texto en el carrusel */
+.carousel-text {
+  position: absolute;
+  color: white;
+  font-size: 2rem;
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0; /* El texto está invisible al principio */
+  transition: opacity 5s ease-in-out;
+}
+
+/* Cuando el carrusel está activo */
+.carousel-item.active {
+  opacity: 1;
+}
+
+.carousel-item.active .carousel-image {
+  opacity: 1;
+}
+
+.carousel-item.active .carousel-text {
+  opacity: 1;
+}
+
