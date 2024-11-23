@@ -1,29 +1,30 @@
 <?php
-session_start();
-require('assets/config.php');
+require 'assets/db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST['username'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+// Obtener productos de la base de datos
+$stmt = $pdo->query("SELECT * FROM products");
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $stmt = $pdo->prepare("INSERT INTO usuario (username, password) VALUES (?, ?)");
-    try {
-        $stmt->execute([$username, $password]);
-        $_SESSION['message'] = "Registro exitoso. Ahora puedes iniciar sesión.";
-        header("Location: signin.php");
-        exit;
-    } catch (PDOException $e) {
-        $_SESSION['message'] = "El nombre de usuario ya está en uso.";
-    }
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+
+if (!empty($searchTerm)) {
+    $query = "SELECT * FROM products WHERE name LIKE :searchTerm";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute(['searchTerm' => "%" . $searchTerm . "%"]);
+} else {
+    $query = "SELECT * FROM products";
+    $stmt = $pdo->query($query);
 }
+
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="img/logo_02.png">
-  <title>Registrate</title>
+  <title>Productos</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles/style.css">
@@ -45,18 +46,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- Menú principal -->
   <div id="menu" class="hidden md:flex flex-col md:flex-row items-center space-x-8 z-10">
-    <a href="index.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+    <a href="indexU.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
       INICIO
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
-    <a href="signin.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+    <a href="product.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
       PRODUCTOS
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
-    <a href="index.php" class="hidden md:block">
+    <a href="indexU.php" class="hidden md:block">
       <img src="img/logo_01.png" alt="Golf & Padel Club" class="h-10">
     </a>
-    <a href="signin.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+    <a href="servicios.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
       SERVICIOS
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
@@ -93,10 +94,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <a href="signin.php">
-       <button>
-         <svg viewBox="0 0 25.00 25.00" class="h-6 w-6 text-white hover:text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.014 8.46835C14.7204 8.17619 14.2455 8.17737 13.9533 8.47099C13.6612 8.76462 13.6624 9.23949 13.956 9.53165L15.014 8.46835ZM16.971 12.5317C17.2646 12.8238 17.7395 12.8226 18.0317 12.529C18.3238 12.2354 18.3226 11.7605 18.029 11.4683L16.971 12.5317ZM18.029 12.5317C18.3226 12.2395 18.3238 11.7646 18.0317 11.471C17.7395 11.1774 17.2646 11.1762 16.971 11.4683L18.029 12.5317ZM13.956 14.4683C13.6624 14.7605 13.6612 15.2354 13.9533 15.529C14.2455 15.8226 14.7204 15.8238 15.014 15.5317L13.956 14.4683ZM17.5 12.75C17.9142 12.75 18.25 12.4142 18.25 12C18.25 11.5858 17.9142 11.25 17.5 11.25V12.75ZM3.5 11.25C3.08579 11.25 2.75 11.5858 2.75 12C2.75 12.4142 3.08579 12.75 3.5 12.75V11.25ZM13.956 9.53165L16.971 12.5317L18.029 11.4683L15.014 8.46835L13.956 9.53165ZM16.971 11.4683L13.956 14.4683L15.014 15.5317L18.029 12.5317L16.971 11.4683ZM17.5 11.25H3.5V12.75H17.5V11.25Z" fill="#ffffff"></path> <path d="M9.5 15C9.5 17.2091 11.2909 19 13.5 19H17.5C19.7091 19 21.5 17.2091 21.5 15V9C21.5 6.79086 19.7091 5 17.5 5H13.5C11.2909 5 9.5 6.79086 9.5 9" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15.014 8.46835C14.7204 8.17619 14.2455 8.17737 13.9533 8.47099C13.6612 8.76462 13.6624 9.23949 13.956 9.53165L15.014 8.46835ZM16.971 12.5317C17.2646 12.8238 17.7395 12.8226 18.0317 12.529C18.3238 12.2354 18.3226 11.7605 18.029 11.4683L16.971 12.5317ZM18.029 12.5317C18.3226 12.2395 18.3238 11.7646 18.0317 11.471C17.7395 11.1774 17.2646 11.1762 16.971 11.4683L18.029 12.5317ZM13.956 14.4683C13.6624 14.7605 13.6612 15.2354 13.9533 15.529C14.2455 15.8226 14.7204 15.8238 15.014 15.5317L13.956 14.4683ZM17.5 12.75C17.9142 12.75 18.25 12.4142 18.25 12C18.25 11.5858 17.9142 11.25 17.5 11.25V12.75ZM3.5 11.25C3.08579 11.25 2.75 11.5858 2.75 12C2.75 12.4142 3.08579 12.75 3.5 12.75V11.25ZM13.956 9.53165L16.971 12.5317L18.029 11.4683L15.014 8.46835L13.956 9.53165ZM16.971 11.4683L13.956 14.4683L15.014 15.5317L18.029 12.5317L16.971 11.4683ZM17.5 11.25H3.5V12.75H17.5V11.25Z" fill="#ffffff"></path> <path d="M9.5 15C9.5 17.2091 11.2909 19 13.5 19H17.5C19.7091 19 21.5 17.2091 21.5 15V9C21.5 6.79086 19.7091 5 17.5 5H13.5C11.2909 5 9.5 6.79086 9.5 9" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-       </button>
-     </a>
+      <button class="flex items-center text-white hover:text-gray-400">
+        <span class="mr-2">Cerrar sesión</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 15l5-5-5-5"></path>
+          <path d="M20 4v16"></path>
+        </svg>
+      </button>
+    </a>
 
     <a href="cart.php">
       <button>
@@ -108,50 +113,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </a>
   </div>
 </nav>
-<div class="flex justify-center items-center h-screen bg-cover bg-center relative" style="background-image: url('img/registro-fondo.jpg');">
-    <!-- Capa de opacidad -->
-    <div class="absolute inset-0 bg-black opacity-50"></div>
 
-    <!-- Contenido principal -->
-    <div class="w-96 p-6 shadow-lg bg-white rounded-md relative z-10">
-        <h1 class="text-3xl block text-center font-semibold">
-            <i class="fa-solid fa-user"></i> Registro
-        </h1>
-        <hr class="mt-3">
-        <form method="post">
-            <div class="mt-3">
-                <label for="username" class="block text-base mb-2">Usuario</label>
-                <input type="text" class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" name="username" placeholder="Nombre de usuario" required>
+<!-- Contenedor principal de productos -->
+<div class="container mx-auto px-6 py-10">
+    <h2 class="text-4xl font-bold text-center text-green-600 mb-8">Catálogo de Productos</h2>
+
+    <!-- Ajustes de grid responsivos -->
+    <div class="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <?php foreach ($products as $product): ?>
+            <div class="product bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <img src="<?= $product['image']; ?>" alt="<?= $product['name']; ?>" class="w-full h-48 object-cover rounded-md mb-4">
+                <h3 class="text-xl font-semibold text-gray-800"><?= $product['name']; ?></h3>
+                <p class="text-lg text-gray-600 mt-2">Precio: $<?= number_format($product['price'], 2); ?></p>
+                <div class="mt-4">
+                    <button 
+                        class="add-to-cart bg-green-600 text-white py-2 px-4 w-full rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500" 
+                        data-product-id="<?= $product['id']; ?>" 
+                        data-product-name="<?= $product['name']; ?>" 
+                        data-product-price="<?= $product['price']; ?>" 
+                        data-product-stock="<?= $product['stock']; ?>">
+                        Agregar al carrito
+                    </button>
+                </div>
             </div>
-            <div class="mt-3">
-                <label for="password" class="block text-base mb-2">Contraseña</label>
-                <input type="password" class="border w-full text-base px-2 py-1 focus:outline-none focus:ring-0 focus:border-gray-600" name="password" placeholder="Contraseña" required>
-            </div>
-            <div class="mt-3">
-                <button type="submit" class="border-2 border-indigo-700 bg-indigo-700 text-white py-1 w-full rounded-md hover:bg-transparent hover:text-indigo-700 font-semibold">
-                    <i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp; Registrar
-                </button>
-            </div>
-            <div class="mt-3">
-                <a href="signin.php" class="text-indigo-800 font-semibold">Ya tengo cuenta</a>
-            </div>
-            <?php if (isset($_SESSION['message'])): ?>
-                <p class="mt-3 text-red-500"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></p>
-            <?php endif; ?>
-        </form>
+        <?php endforeach; ?>
     </div>
 </div>
 
-<footer class="flex flex-col md:flex-row items-center justify-center bg-green-700 p-4">
+    <footer class="flex flex-col md:flex-row items-center justify-center bg-green-700 p-4">
   <!-- Contenedor centrado -->
   <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-x-8 md:space-y-0">
     <!-- Enlaces -->
     <a href="index.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">INICIO</a>
-    <a href="signin.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">PRODUCTOS</a>
+    <a href="product.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">PRODUCTOS</a>
     <a href="index.php">
       <img src="img/logo_01.png" alt="Golf & Padel Club" class="h-20">
     </a>
-    <a href="signin.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">SERVICIOS</a>
+    <a href="servicios.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">SERVICIOS</a>
     <a href="contact.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">CONTACTO</a>
   </div>
   
@@ -163,6 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </a>
 </footer>
 
+    <script src="script.js"></script>
+    <!-- Script de JavaScript para el control del cambio automático -->
 <script>
   let currentIndex = 0;
   const items = document.querySelectorAll('.carousel-item');
@@ -228,6 +228,13 @@ const arrowButton = document.querySelector('a[href="#top"]');
     smoothScrollToTop();
   });
 
+   // Mostrar y ocultar el formulario de búsqueda al hacer clic en el ícono
+   document.getElementById('searchIcon').addEventListener('click', function() {
+      var searchForm = document.getElementById('searchForm');
+      searchForm.classList.toggle('hidden'); 
+      document.getElementById('searchInput').focus(); 
+  });
+
   // Toggle del menú en dispositivos pequeños
   const menuToggle = document.getElementById('menuToggle');
   const menu = document.getElementById('menu');
@@ -236,5 +243,7 @@ const arrowButton = document.querySelector('a[href="#top"]');
     menu.classList.toggle('hidden');
   });
 </script>
+
+    
 </body>
 </html>

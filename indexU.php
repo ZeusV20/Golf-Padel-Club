@@ -1,14 +1,9 @@
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="img/logo_02.png">
+  <title>Bienvenido</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="styles/style.css">
@@ -18,58 +13,83 @@
 </head>
 <body>
 <nav class="flex items-center justify-between bg-green-700 p-4">
-  <!-- Elementos del lado izquierdo -->
+  <!-- Espacio vacío en la izquierda (puedes usarlo o eliminarlo) -->
+  <div></div>
 
-  <div></div> <!-- Espacio vacío para balancear -->
+  <!-- Botón de menú hamburguesa -->
+  <button id="menuToggle" class="block md:hidden text-white focus:outline-none z-20">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+    </svg>
+  </button>
 
-  <!-- Navegación centrada -->
-  <div class="flex items-center space-x-8">
-    <!-- Botones con subrayado animado -->
+  <!-- Menú principal -->
+  <div id="menu" class="hidden md:flex flex-col md:flex-row items-center space-x-8 z-10">
     <a href="indexU.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
       INICIO
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+    <a href="product.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
       PRODUCTOS
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
-    <a href="#">
+    <a href="indexU.php" class="hidden md:block">
       <img src="img/logo_01.png" alt="Golf & Padel Club" class="h-10">
     </a>
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      Servicios
+    <a href="servicios.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+      SERVICIOS
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      Contacto
+    <a href="contact.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
+      CONTACTO
       <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
     </a>
   </div>
 
   <!-- Íconos a la derecha -->
   <div class="flex items-center space-x-6">
-    <!-- Búsqueda -->
-     <a href="">
-       <button>
-         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 10-14 0 7 7 0 0014 0z" />
-         </svg>
-       </button>
-     </a>
-    <!-- Iniciar sesión -->
-     <a href="signin.php">
-       <button>
-         <svg viewBox="0 0 25.00 25.00" class="h-6 w-6 text-white hover:text-gray-400" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.014 8.46835C14.7204 8.17619 14.2455 8.17737 13.9533 8.47099C13.6612 8.76462 13.6624 9.23949 13.956 9.53165L15.014 8.46835ZM16.971 12.5317C17.2646 12.8238 17.7395 12.8226 18.0317 12.529C18.3238 12.2354 18.3226 11.7605 18.029 11.4683L16.971 12.5317ZM18.029 12.5317C18.3226 12.2395 18.3238 11.7646 18.0317 11.471C17.7395 11.1774 17.2646 11.1762 16.971 11.4683L18.029 12.5317ZM13.956 14.4683C13.6624 14.7605 13.6612 15.2354 13.9533 15.529C14.2455 15.8226 14.7204 15.8238 15.014 15.5317L13.956 14.4683ZM17.5 12.75C17.9142 12.75 18.25 12.4142 18.25 12C18.25 11.5858 17.9142 11.25 17.5 11.25V12.75ZM3.5 11.25C3.08579 11.25 2.75 11.5858 2.75 12C2.75 12.4142 3.08579 12.75 3.5 12.75V11.25ZM13.956 9.53165L16.971 12.5317L18.029 11.4683L15.014 8.46835L13.956 9.53165ZM16.971 11.4683L13.956 14.4683L15.014 15.5317L18.029 12.5317L16.971 11.4683ZM17.5 11.25H3.5V12.75H17.5V11.25Z" fill="#ffffff"></path> <path d="M9.5 15C9.5 17.2091 11.2909 19 13.5 19H17.5C19.7091 19 21.5 17.2091 21.5 15V9C21.5 6.79086 19.7091 5 17.5 5H13.5C11.2909 5 9.5 6.79086 9.5 9" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M15.014 8.46835C14.7204 8.17619 14.2455 8.17737 13.9533 8.47099C13.6612 8.76462 13.6624 9.23949 13.956 9.53165L15.014 8.46835ZM16.971 12.5317C17.2646 12.8238 17.7395 12.8226 18.0317 12.529C18.3238 12.2354 18.3226 11.7605 18.029 11.4683L16.971 12.5317ZM18.029 12.5317C18.3226 12.2395 18.3238 11.7646 18.0317 11.471C17.7395 11.1774 17.2646 11.1762 16.971 11.4683L18.029 12.5317ZM13.956 14.4683C13.6624 14.7605 13.6612 15.2354 13.9533 15.529C14.2455 15.8226 14.7204 15.8238 15.014 15.5317L13.956 14.4683ZM17.5 12.75C17.9142 12.75 18.25 12.4142 18.25 12C18.25 11.5858 17.9142 11.25 17.5 11.25V12.75ZM3.5 11.25C3.08579 11.25 2.75 11.5858 2.75 12C2.75 12.4142 3.08579 12.75 3.5 12.75V11.25ZM13.956 9.53165L16.971 12.5317L18.029 11.4683L15.014 8.46835L13.956 9.53165ZM16.971 11.4683L13.956 14.4683L15.014 15.5317L18.029 12.5317L16.971 11.4683ZM17.5 11.25H3.5V12.75H17.5V11.25Z" fill="#ffffff"></path> <path d="M9.5 15C9.5 17.2091 11.2909 19 13.5 19H17.5C19.7091 19 21.5 17.2091 21.5 15V9C21.5 6.79086 19.7091 5 17.5 5H13.5C11.2909 5 9.5 6.79086 9.5 9" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-       </button>
-     </a>
-    <!-- Carrito de compras -->
-     <a href="">
-       <button>
-         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13h10a3 3 0 100 6H7a3 3 0 100-6z" />
-         </svg>
-       </button>
-     </a>
+    <a href="#" id="searchIcon">
+      <button>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 10-14 0 7 7 0 0014 0z" />
+        </svg>
+      </button>
+    </a>
+
+    <form action="product.php" method="GET" class="hidden" id="searchForm">
+      <input 
+        type="text" 
+        name="search" 
+        placeholder="Buscar productos..." 
+        class="border p-2 rounded-l-md"
+        id="searchInput"
+      >
+      <button 
+        type="submit" 
+        class="bg-green-600 text-white p-2 rounded-r-md hover:bg-green-700"
+      >
+        Buscar
+      </button>
+    </form>
+
+    <a href="signin.php">
+      <button class="flex items-center text-white hover:text-gray-400">
+        <span class="mr-2">Cerrar sesión</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M10 15l5-5-5-5"></path>
+          <path d="M20 4v16"></path>
+        </svg>
+      </button>
+    </a>
+
+    <a href="cart.php">
+      <button>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white hover:text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 7M7 13h10a3 3 0 100 6H7a3 3 0 100-6z" />
+        </svg>
+        <span id="cart-count" class="cart-count">0</span>
+      </button>
+    </a>
   </div>
 </nav>
 
@@ -79,30 +99,31 @@
     <!-- Imagen 1 y texto -->
     <div class="carousel-item w-full flex-shrink-0 relative">
       <img src="img/cancha_01.jpg" class="w-full h-full object-cover" alt="Imagen del club">
-      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-5xl p-6">
+      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl p-6">
         <p class="transition-all duration-1000">Bienvenidos al Golf & Padel Club.</p>
       </div>
     </div>
     <!-- Imagen 2 y texto -->
     <div class="carousel-item w-full flex-shrink-0 relative">
       <img src="img/cancha_02.jpg" class="w-full h-full object-cover" alt="Imagen del club">
-      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-5xl p-6">
+      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl p-6">
         <p class="transition-all duration-1000">Disfruta de un ambiente relajante y exclusivo.</p>
       </div>
     </div>
     <!-- Imagen 3 y texto -->
     <div class="carousel-item w-full flex-shrink-0 relative">
       <img src="img/cancha_03.jpg" class="w-full h-full object-cover" alt="Imagen del club">
-      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-5xl p-6">
+      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl p-6">
         <p class="transition-all duration-1000">Vive una experiencia única en nuestras instalaciones.</p>
       </div>
     </div>
 
     <div class="carousel-item w-full flex-shrink-0 relative">
       <img src="img/cancha_04.jpg" class="w-full h-full object-cover" alt="Imagen del club">
-      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-5xl p-6">
+      <div class="absolute top-1/2 left-0 w-full text-center transform -translate-y-1/2 text-white font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl p-6">
         <p class="transition-all duration-1000">Vive una experiencia única en nuestras instalaciones.</p>
       </div>
+    </div>
   </div>
 </div>
 
@@ -160,37 +181,17 @@
     </div>
   </section>
 
-  <footer class="flex items-center justify-center bg-green-700 p-4">
+  <footer class="flex flex-col md:flex-row items-center justify-center bg-green-700 p-4">
   <!-- Contenedor centrado -->
-  <div class="flex items-center justify-center space-x-8">
-    <!-- Enlace INICIO -->
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      INICIO
-      <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
-    </a>
-
-    <!-- Enlace PRODUCTOS -->
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      PRODUCTOS
-      <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
-    </a>
-
-    <!-- Logo en el centro -->
-    <a href="#">
+  <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-x-8 md:space-y-0">
+    <!-- Enlaces -->
+    <a href="index.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">INICIO</a>
+    <a href="product.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">PRODUCTOS</a>
+    <a href="index.php">
       <img src="img/logo_01.png" alt="Golf & Padel Club" class="h-20">
     </a>
-
-    <!-- Enlace Servicios -->
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      Servicios
-      <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
-    </a>
-
-    <!-- Enlace Contacto -->
-    <a href="#" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">
-      Contacto
-      <span class="absolute inset-x-0 bottom-0 h-0.5 bg-yellow-400 scale-x-0 origin-center transition-transform duration-300 hover:scale-x-100"></span>
-    </a>
+    <a href="servicios.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">SERVICIOS</a>
+    <a href="contact.php" class="relative text-white px-4 py-2 transition duration-300 hover:text-gray-300">CONTACTO</a>
   </div>
   
   <!-- Flecha para subir al inicio -->
@@ -267,6 +268,21 @@ const arrowButton = document.querySelector('a[href="#top"]');
     }
 
     smoothScrollToTop();
+  });
+
+   // Mostrar y ocultar el formulario de búsqueda al hacer clic en el ícono
+   document.getElementById('searchIcon').addEventListener('click', function() {
+      var searchForm = document.getElementById('searchForm');
+      searchForm.classList.toggle('hidden'); 
+      document.getElementById('searchInput').focus(); 
+  });
+
+  // Toggle del menú en dispositivos pequeños
+  const menuToggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('menu');
+
+  menuToggle.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
   });
 </script>
 
